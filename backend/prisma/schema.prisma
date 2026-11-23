@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum StatusOS {
+  A_FAZER
+  FAZENDO
+  FEITO
+}
+
+// 1 Funcionários / admins da loja
+model User {
+  id       String         @id @default(cuid())
+  username String         @unique
+  email    String         @unique
+  password String
+  ordens   OrdemServico[]
+  pecas    Peca[]
+
+  @@map("users")
+}
+
+// 2 Clientes (CPF = chave primária, só 11 dígitos)
+model Cliente {
+  cpf      String         @id @db.Char(11)
+  nome     String         @db.VarChar(50)
+  whatsapp String
+  ordens   OrdemServico[]
+
+  @@map("clientes")
+}
+
+// 3 Categorias (entidade de apoio, 1:N com a OS)
+model Categoria {
+  id     String         @id @default(cuid())
+  nome   String         @unique
+  ordens OrdemServico[]
+
+  @@map("categorias")
+}
+
+// 4 Ordens de serviço (cards do Kanban)
+model OrdemServico {
+  id            String             @id @default(cuid())
+  problema      String             @db.VarChar(50)
+  descricao     String             @db.VarChar(250)
+  fotoUrl       String?
+  videoUrl      String?
+  status        StatusOS           @default(A_FAZER)
+  criadoEm      DateTime           @default(now())
+  concluidoEm   DateTime?
+  clienteCpf    String             @db.Char(11)
+  cliente       Cliente            @relation(fields: [clienteCpf], references: [cpf])
+  funcionarioId String?
+  funcionario   User?              @relation(fields: [funcionarioId], references: [id])
+  categoriaId   String?
+  categoria     Categoria?         @relation(fields: [categoriaId], references: [id])
+  pecas         OrdemServicoPeca[]
+
+  @@map("ordens_servico")
+}
+
+// 5 Peças
+model Peca {
+  id      String             @id @default(cuid())
+  nome    String
+  preco   Float
+  estoque Int
+  userId  String
+  user    User               @relation(fields: [userId], references: [id])
+  ordens  OrdemServicoPeca[]
+
+  @@map("pecas")
+}
+
+// 6 Tabela associativa N:N (OS <-> Peça)
+model OrdemServicoPeca {
+  ordemId    String
+  pecaId     String
+  quantidade Int          @default(1)
+  ordem      OrdemServico @relation(fields: [ordemId], references: [id], onDelete: Cascade)
+  peca       Peca         @relation(fields: [pecaId], references: [id])
+
+  @@id([ordemId, pecaId])
+  @@map("ordem_servico_pecas")
+}
+
+// 7 Log (snapshot das OS antigas que saem da coluna "Feito")
+model LogServico {
+  id              String   @id @default(cuid())
+  ordemIdOriginal String
+  clienteCpf      String
+  clienteNome     String
+  problema        String
+  descricao       String
+  fotoUrl         String?
+  videoUrl        String?
+  funcionarioNome String?
+  pecasJson       Json?
+  concluidoEm     DateTime
+  arquivadoEm     DateTime @default(now())
+
+  @@map("log_servicos")
+}

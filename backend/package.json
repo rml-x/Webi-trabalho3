@@ -1,0 +1,26 @@
+{
+  "name": "ebike-oficina-api",
+  "version": "1.0.0",
+  "description": "API REST - Oficina de bikes elétricas (Express, Prisma, Neon, JWT)",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/adapter-neon": "7.10.0",
+    "@prisma/client": "7.10.0",
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "7.10.0"
+  },
+  "allowScripts": {
+    "bcrypt@6.0.0": true,
+    "prisma@7.10.0": true,
+    "@prisma/engines@7.10.0": true
+  }
+}

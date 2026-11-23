@@ -1,0 +1,33 @@
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, sans-serif; background: #f1f5f9; color: #0f172a; }
+.container { max-width: 640px; margin: 0 auto; padding: 16px; }
+.container.pequeno { max-width: 420px; }
+.container.largo { max-width: 1200px; }
+.topo { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.topo h1 { font-size: 1.4rem; margin: 8px 0; }
+a { color: #0369a1; }
+.card { background: #fff; border-radius: 10px; padding: 16px; margin: 16px 0; box-shadow: 0 1px 3px #0002; display: flex; flex-direction: column; gap: 10px; }
+.card h2 { margin: 0; font-size: 1.1rem; }
+label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; font-size: .9rem; }
+label small { font-weight: 400; color: #64748b; }
+input, textarea, select { padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font: inherit; width: 100%; }
+button { background: #0369a1; color: #fff; border: 0; border-radius: 6px; padding: 8px 14px; cursor: pointer; font: inherit; }
+button:disabled { opacity: .5; cursor: not-allowed; }
+button.sec { background: #64748b; }
+button.ativa { background: #0f172a; }
+button.link { background: none; color: #0369a1; text-decoration: underline; }
+button.x { background: none; color: #dc2626; padding: 0 6px; }
+.linha { display: flex; gap: 8px; align-items: center; }
+.ok { color: #15803d; margin: 0; }
+.erro { color: #b91c1c; margin: 0; }
+.lista { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.abas { display: flex; gap: 8px; margin: 12px 0; }
+.kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; align-items: start; }
+.coluna { background: #e2e8f0; border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 10px; min-height: 200px; }
+.coluna h3 { margin: 0; }
+.kcard { background: #fff; border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px; box-shadow: 0 1px 2px #0002; }
+.kcard p { margin: 0; font-size: .9rem; }
+.kcard small { color: #475569; }
+.pecas { margin: 0; padding-left: 18px; font-size: .85rem; }
+.duas { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 800px) { .kanban, .duas { grid-template-columns: 1fr; } }
